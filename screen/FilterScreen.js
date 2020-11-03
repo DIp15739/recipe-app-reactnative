@@ -19,6 +19,11 @@ const FilterSwitch = (props) => {
 };
 
 const FilterScreen = (props) => {
+  const [isGlutenFree, setIsGlutenFree] = useState(false);
+  const [isLactoseFree, setIsLactoseFree] = useState(false);
+  const [isVegan, setIsVegan] = useState(false);
+  const [isVegetarian, setIsVegetarian] = useState(false);
+  
   useEffect(() => {
     props.navigation.setOptions({
       headerLeft: () => (
@@ -43,11 +48,6 @@ const FilterScreen = (props) => {
       ),
     });
   }, [props.navigation, isGlutenFree, isLactoseFree, isVegan, isVegetarian]);
-
-  const [isGlutenFree, setIsGlutenFree] = useState(false);
-  const [isLactoseFree, setIsLactoseFree] = useState(false);
-  const [isVegan, setIsVegan] = useState(false);
-  const [isVegetarian, setIsVegetarian] = useState(false);
 
   const saveFilter = () => {
     const appliedFilters = {
