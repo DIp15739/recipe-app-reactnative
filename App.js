@@ -4,6 +4,15 @@ import { StyleSheet, Text, View } from "react-native";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
 import RecipeNavigator from "./navigation/RecipeNavigator";
+import { createStore, combineReducers } from "redux";
+import { Provider } from "react-redux";
+import recipeReducer from "./store/reducers/recipe";
+
+const rootReducer = combineReducers({
+  recipe: recipeReducer,
+});
+
+const store = createStore(rootReducer);
 
 const customFonts = () => {
   return Font.loadAsync({
@@ -27,10 +36,12 @@ export default function App() {
   }
 
   return (
-    <React.Fragment>
-      <RecipeNavigator />
-      <StatusBar style="dark" />
-    </React.Fragment>
+    <Provider store={store}>
+      <React.Fragment>
+        <RecipeNavigator />
+        <StatusBar style="dark" />
+      </React.Fragment>
+    </Provider>
   );
 }
 
