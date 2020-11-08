@@ -9,11 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleWishList } from "../store/actions/recipe";
 
 const RecipeDetailScreen = (props) => {
-  const [headerIcon, setHeaderIcon] = React.useState(0);
   const seletedRecipe = useSelector((state) => state.recipe.recipe);
   const { id } = props.route.params;
   const selectedRecipe = seletedRecipe.find((cat) => cat.id === id);
-
   const currentRecipeInWishList = useSelector((state) =>
     state.recipe.wishListRecipe.some((recipe) => recipe.id === id)
   );
@@ -30,7 +28,7 @@ const RecipeDetailScreen = (props) => {
         <View style={styles.headerIconButton}>
           <TouchableNativeFeedback
             activeOpacity={0.6}
-            onPress={() => setHeaderIcon(toggleWishListHandler)}>
+            onPress={toggleWishListHandler}>
             <AntDesign
               name={currentRecipeInWishList ? "star" : "staro"}
               size={24}
