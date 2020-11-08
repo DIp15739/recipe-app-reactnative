@@ -5,13 +5,23 @@ import {
   ScrollView,
   TouchableNativeFeedback,
 } from "react-native-gesture-handler";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleWishList } from "../store/actions/recipe";
 
 const RecipeDetailScreen = (props) => {
   const [headerIcon, setHeaderIcon] = React.useState(0);
   const seletedRecipe = useSelector((state) => state.recipe.recipe);
   const { id } = props.route.params;
   const selectedRecipe = seletedRecipe.find((cat) => cat.id === id);
+
+  const currentRecipeInWishList = useSelector((state) =>
+    state.recipe.wishListRecipe.some((recipe) => recipe.id === id)
+  );
+
+  const dispatch = useDispatch();
+  const toggleWishListHandler = () => {
+    dispatch(toggleWishList(id));
+  };
 
   useEffect(() => {
     props.navigation.setOptions({
@@ -20,13 +30,17 @@ const RecipeDetailScreen = (props) => {
         <View style={styles.headerIconButton}>
           <TouchableNativeFeedback
             activeOpacity={0.6}
-            onPress={() => setHeaderIcon(console.log("Star button clicked"))}>
-            <AntDesign name="star" size={24} color="black" />
+            onPress={() => setHeaderIcon(toggleWishListHandler)}>
+            <AntDesign
+              name={currentRecipeInWishList ? "star" : "staro"}
+              size={24}
+              color="black"
+            />
           </TouchableNativeFeedback>
         </View>
       ),
     });
-  }, []);
+  }, [currentRecipeInWishList]);
 
   return (
     <ScrollView>

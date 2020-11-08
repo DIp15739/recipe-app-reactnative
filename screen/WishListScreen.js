@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import RecipeList from "../components/RecipeList";
 import { useSelector } from "react-redux";
 import { Entypo } from "@expo/vector-icons";
@@ -22,6 +22,16 @@ const WishListScreen = (props) => {
 
   const wishRecipes = useSelector((state) => state.recipe.wishListRecipe);
 
+  if (wishRecipes.length === 0 || !wishRecipes) {
+    return (
+      <View style={styles.textView}>
+        <Text style={styles.text}>
+          No favorite meals found. Start adding some!
+        </Text>
+      </View>
+    );
+  }
+
   return <RecipeList listData={wishRecipes} navigation={props.navigation} />;
 };
 
@@ -32,5 +42,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
     overflow: "hidden",
     borderRadius: 10,
+  },
+  textView: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  text: {
+    fontSize: 15,
+    fontWeight: "bold",
   },
 });
