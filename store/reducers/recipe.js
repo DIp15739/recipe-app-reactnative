@@ -1,5 +1,5 @@
 import { LIST } from "../../data/dummy-data";
-import { TOGGLE_WISHLIST } from "../actions/recipe";
+import { SET_FILTER, TOGGLE_WISHLIST } from "../actions/recipe";
 
 const initialState = {
   recipe: LIST,
@@ -26,6 +26,24 @@ const recipeReducer = (state = initialState, action) => {
           wishListRecipe: state.wishListRecipe.concat(recipe),
         };
       }
+    case SET_FILTER:
+      const appliedFilters = action.filters;
+      const updatedfilteredRecipe = state.recipe.filter((recipe) => {
+        if (appliedFilters.glutenFree && !recipe.isGlutenFree) {
+          return false;
+        }
+        if (appliedFilters.lactoseFree && !recipe.isLactoseFree) {
+          return false;
+        }
+        if (appliedFilters.vegan && !recipe.isVegan) {
+          return false;
+        }
+        if (appliedFilters.vegetarian && !recipe.isVegetarian) {
+          return false;
+        }
+        return true;
+      });
+      return { ...state, filteredRecipe: updatedfilteredRecipe };
     default:
       return state;
   }

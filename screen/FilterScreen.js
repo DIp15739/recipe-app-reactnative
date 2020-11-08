@@ -3,6 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { Switch, TouchableNativeFeedback } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { setFilters } from "../store/actions/recipe";
 
 const FilterSwitch = (props) => {
   return (
@@ -23,7 +25,8 @@ const FilterScreen = (props) => {
   const [isLactoseFree, setIsLactoseFree] = useState(false);
   const [isVegan, setIsVegan] = useState(false);
   const [isVegetarian, setIsVegetarian] = useState(false);
-  
+  const dispatch = useDispatch();
+
   useEffect(() => {
     props.navigation.setOptions({
       headerLeft: () => (
@@ -51,12 +54,12 @@ const FilterScreen = (props) => {
 
   const saveFilter = () => {
     const appliedFilters = {
-      GlutenFree: isGlutenFree,
-      LactoseFree: isLactoseFree,
-      Vegan: isVegan,
-      Vegetarian: isVegetarian,
+      glutenFree: isGlutenFree,
+      lactoseFree: isLactoseFree,
+      vegan: isVegan,
+      vegetarian: isVegetarian,
     };
-    console.log("Save Filter Values", appliedFilters);
+    dispatch(setFilters(appliedFilters));
   };
 
   return (
