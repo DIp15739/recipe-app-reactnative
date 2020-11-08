@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { LIST } from "../data/dummy-data";
 import { AntDesign } from "@expo/vector-icons";
 import {
   ScrollView,
   TouchableNativeFeedback,
 } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
 
 const RecipeDetailScreen = (props) => {
   const [headerIcon, setHeaderIcon] = React.useState(0);
+  const seletedRecipe = useSelector((state) => state.recipe.recipe);
   const { id } = props.route.params;
-  const selectedRecipe = LIST.find((cat) => cat.id === id);
+  const selectedRecipe = seletedRecipe.find((cat) => cat.id === id);
 
   useEffect(() => {
     props.navigation.setOptions({

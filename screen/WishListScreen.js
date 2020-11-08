@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import RecipeList from "../components/RecipeList";
-import { LIST } from "../data/dummy-data";
+import { useSelector } from "react-redux";
 import { Entypo } from "@expo/vector-icons";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 
@@ -20,9 +20,8 @@ const WishListScreen = (props) => {
     });
   }, []);
 
-  const wishRecipes = LIST.filter(
-    (recipe) => recipe.id === "m1" || recipe.id === "m2"
-  );
+  const wishRecipes = useSelector((state) => state.recipe.wishListRecipe);
+
   return <RecipeList listData={wishRecipes} navigation={props.navigation} />;
 };
 
